@@ -1,9 +1,10 @@
-
+// 3rd party module
 const FS  = require('fs');
 const Yargs = require('yargs');
+const _ = require('lodash');
 
 const Note = require('./note.js');
-const _ = require('lodash');
+
 
 const argv= Yargs.argv;
 

@@ -5,28 +5,25 @@ const _ = require('lodash');
 
 const Note = require('./note.js');
 
-
+// using input from user terminal
 const argv= Yargs.argv;
 
-console.log('process argv',process.argv);
-console.log('yarns argv',argv);
-
-console.log('starting app');
-Note.getNotes();
-
-var arr = [1,2,3,3,4,4,5,5];
-console.log(_.uniq(arr));
+// console.log('process argv',process.argv);
+// console.log('yarns argv',argv);
+// console.log('starting app');
 
 var command = argv._[0];
-console.log('Command :',command);
-
 switch(command){
     case 'add':
-        console.log('Adding new note');
-        Note.addNote(argv.title,argv.body);
+        var note = Note.addNote(argv.title,argv.body);
+        if(!note){
+            console.log(`${argv.title} already exists`);
+        }
+        else{
+            console.log(`${note.title} created`);
+        }
         break;
     case 'list':
-        console.log('listing notes');
         Note.getAll();
         break;
     case 'read':
@@ -34,9 +31,10 @@ switch(command){
         Note.read(argv.title);
         break;
     case 'remove':
-        console.log('remove note');
-        Note.remove(argv.title);
+        var removed = Note.remove(argv.title);
+        var message = removed?"note removed":"title not found";
+        console.log(message);
         break;
     default:
-        console.log('not recognized')
+        console.log(`${command} not recognised`);
 }

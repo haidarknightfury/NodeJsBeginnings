@@ -8,11 +8,9 @@ const Note = require('./note.js');
 // using input from user terminal
 const argv= Yargs.argv;
 
-// console.log('process argv',process.argv);
-// console.log('yarns argv',argv);
-// console.log('starting app');
-
+// command is the first parameter
 var command = argv._[0];
+
 switch(command){
     case 'add':
         var note = Note.addNote(argv.title,argv.body);
@@ -20,15 +18,20 @@ switch(command){
             console.log(`${argv.title} already exists`);
         }
         else{
-            console.log(`${note.title} created`);
+            Note.logNote(note);
         }
         break;
     case 'list':
         Note.getAll();
         break;
     case 'read':
-        console.log('read note');
-        Note.read(argv.title);
+        var note = Note.getNote(argv.title);
+        if(note){
+            Note.logNote(note);
+        }
+        else{
+            console.log(`no note with title ${argv.title}`);
+        }
         break;
     case 'remove':
         var removed = Note.remove(argv.title);

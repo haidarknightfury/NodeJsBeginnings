@@ -9,19 +9,19 @@ var fetchNotes = () => {
     } catch (err) {
         return [];
     }
-}
+};
 
 var saveNotes = (notes) => {
     FS.writeFileSync(note_file, JSON.stringify(notes));
-}
+};
 
 var addNote = (title, body) => {
     var notes = [];
     var note = {
         title,
         body
-    }
-    notes = fetchNotes();;
+    };
+    notes = fetchNotes();
     var duplicateNotes = notes.filter((note) => {
         return note.title == title;
     });
@@ -31,33 +31,42 @@ var addNote = (title, body) => {
         saveNotes(notes);
         return note;
     }
-}
+};
 
 var getAll = () => {
     var notes = fetchNotes();
     console.log('notes', notes);
 };
 
-var read = (title) => {
+var getNote = (title) => {
     console.log(`retrieving note with title ${title}`);
-    var notes = getAll();
-}
+    var notes = fetchNotes();
+    var filteredNotes = notes.filter(function (_note) {
+        return _note.title == title;
+    });
+    return filteredNotes[0];
+};
 
 var remove = (title) => {
     var notes = fetchNotes();
-    // _.remove(notes,(note)=>{
-    //     return note.title == title;
-    // });
     var filteredNotes = notes.filter((note) => {
         return note.title !== title;
     });
     saveNotes(notes);
     return filteredNotes.length !== notes.length;
-}
+};
+
+var logNote = (note) => {
+    console.log('--');
+    debugger;
+    console.log(note.title);
+    console.log(note.body);
+};
 
 module.exports = {
     addNote: addNote,
-    getAll,
-    read,
-    remove
+    getAll:getAll,
+    getNote:getNote,
+    remove:remove,
+    logNote
 }

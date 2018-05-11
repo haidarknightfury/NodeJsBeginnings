@@ -9,6 +9,8 @@ console.log(person);
 
 // node -v v>8
 // n - next , c - continue ,repl - inspect , debugger; - breakpoint
-//node inspect
-// nodemon inspect app.js read --title = rep'haidar'
+// node inspect app.js read --title = 'haidar'
+// nodemon inspect app.js read --title ='haidar'
+// node --inspect-brk app.js --title ='haidar' - chrome://inspect - open dedicated devTools
+// nodemon --inspect-brk app.js --title="haidar"
 

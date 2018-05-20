@@ -1,14 +1,34 @@
 const express = require('express');
 const hbs = require('hbs');
+const fs = require('fs');
+
+const port = process.env.PORT || 3000;
 
 var app = express();
 hbs.registerPartials(__dirname+'/views/partials');
 app.set('view engine', 'hbs');
 
 
+
+// register middleware - interceptor
+app.use((req,res,next)=>{
+    var now = new Date().toString();
+    var log = `${now} : ${req.method} : ${req.url}`;
+    console.log(log);
+    fs.appendFileSync('server.log',log+'\n');
+    // continue with the rests
+    next();
+});
+
+// app.use((req,res,next)=>{
+//     // check if maintainance mode - do not call next 
+//     res.render('maintainance.hbs');
+// });
+
 // express middleware // http://localhost:3000/help.html
-// handlebars - dynammic templating
+// handlebars - dynammic templating - express static directory
 app.use(express.static(__dirname + '/public'));
+
 
 // helper to be available for all hbs files
 hbs.registerHelper('getCurrentYear',()=>{
@@ -48,6 +68,6 @@ app.get('/bad', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log('server is up on port 3000');
+app.listen(port, () => {
+    console.log(`server is up on port ${port}`);
 });

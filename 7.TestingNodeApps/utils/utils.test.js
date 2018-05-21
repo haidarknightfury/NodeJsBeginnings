@@ -10,12 +10,28 @@ it("should add two numbers", () => {
     }
 });
 
+it("should async add 2 numbers",(done)=>{
+    utils.asyncAdd(4,3,(sum)=>{
+        expect(sum).toBe(7).toBeA('number');
+        done();
+    });
+})
+
+
 it("should square a number", () => {
     var rs = utils.square(9);
     // if (rs != 81) {
     //     throw new Error(`Expected 81 but returned ${rs}`);
     // }
     expect(rs).toBe(81).toBeA('number');
+});
+
+
+it("should square async a number",(done)=>{
+    utils.asyncSquare(5,(square)=>{
+        expect(square).toBe(25).toBeA('number');
+        done();
+    })
 });
 
 it("should not be 80", () => {
@@ -48,9 +64,7 @@ it('should produce user given user and names', () => {
     expect(User).toInclude({
         lastname: 'dargaye'
     }).toBeA('object');
-
     expect(User).toEqual(oldUser);// by reference
-    
 });
 
 

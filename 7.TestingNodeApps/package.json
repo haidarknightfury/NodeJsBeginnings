@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "expect": "^1.20.2",
-    "mocha": "^5.2.0"
+    "express": "^4.16.3",
+    "mocha": "^5.2.0",
+    "supertest": "^3.1.0"
   }
 }

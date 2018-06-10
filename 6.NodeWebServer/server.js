@@ -9,7 +9,6 @@ hbs.registerPartials(__dirname+'/views/partials');
 app.set('view engine', 'hbs');
 
 
-
 // register middleware - interceptor
 app.use((req,res,next)=>{
     var now = new Date().toString();

@@ -1,5 +1,4 @@
 // start the server with the path for the data
-mongod.exe --dbpath /Users/Haidar/mongo-data
 
 mongo.exe
 db.Todos.insert({text:'create a todo'})

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const {ObjectID} = require('mongodb');
 
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
@@ -30,6 +31,21 @@ app.get('/todos',(req,res)=>{
         }
     res.send({todos});
     });
+});
+
+//GET /todos/1
+app.get('/todos/:id',(req,res)=>{
+    var id = req.params.id;
+    if (ObjectID.isValid(id)){
+        Todo.findOne({
+            _id: id
+        }).then((result)=>{
+             res.send(result);
+        },(error)=>{res.send(error)})
+    }
+    else{
+        res.status(404).send({error:`${id} malformed`});
+    }
 });
 
 app.listen(3000, () => {

@@ -40,8 +40,11 @@ app.get('/todos/:id',(req,res)=>{
         Todo.findOne({
             _id: id
         }).then((result)=>{
-             res.send(result);
-        },(error)=>{res.send(error)})
+            if(result)
+                res.send({todo:result});
+            else
+                res.status(404).send({error:'not found'})
+        },(error)=>{res.status(404).send(error)})
     }
     else{
         res.status(404).send({error:`${id} malformed`});

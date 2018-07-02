@@ -4,8 +4,11 @@ const expect = require('expect');
 const {app} = require('./../server');
 const {Todo}= require('./../models/todo');
 
+const {ObjectId} = require('mongodb');
 
-const todos = [{text:'first test todo'}, {text:'second test todo'}];
+
+
+const todos = [{_id:new ObjectId(),text:'first test todo'}, {_id:new ObjectId(),text:'second test todo'}];
 
 // move to test case after done is called
 beforeEach((done)=>{
@@ -74,3 +77,32 @@ describe('GET /todos',()=>{
     }
 
 );
+
+describe('GET /todos:id',()=>{
+    it('should return todo doc',(done)=>{
+        request(app)
+            .get(`/todos/${todos[0]._id.toHexString()}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.todo.text).toBe(todos[0].text)
+            })
+            .end(done);
+    });
+
+    it('should return 404',(done)=>{
+        request(app)
+            .get('/todos/123340')
+            .expect(404)
+            .expect((res)=>{
+                expect(res.body.error).toBeTruthy()
+            })
+            .end(done);
+    });
+
+    it('should return 404 for no items',(done)=>{
+        request(app)
+            .get(`/todos/${new ObjectId}`)
+            .expect(404)
+            .end(done);
+    });
+});

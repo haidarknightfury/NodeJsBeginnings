@@ -20,6 +20,17 @@ in mongoDB - a document doesnt need to follow all the fields of one another
 
 # ID property
 
+#MLab MongoDB - heroku plugins 
+heroku create
+heroku addons:create monogolab:sandbox
+heroku config
+    - mongoDB URI- to connect 
+    - process.env.MONGODB_URI
+git push heroku master 
+heroku logs
+heroku open - open the application
+{{url}}/todos - postman
+
 ```java
     import java.util.Scanner;
 

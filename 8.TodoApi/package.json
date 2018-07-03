@@ -4,8 +4,12 @@
   "description": "// start the server with the path for the data\r mongod.exe --dbpath /Users/Haidar/mongo-data",
   "main": "index.js",
   "scripts": {
+    "start":"node server/server.js",
     "test": "mocha server/**/*.test.js",
     "test-watch":"nodemon --exec npm test"
+  },
+  "engines": {
+    "node":"8.11.1"
   },
   "author": "",
   "license": "ISC",

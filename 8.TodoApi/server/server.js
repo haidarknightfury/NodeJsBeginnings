@@ -5,6 +5,7 @@ const {ObjectID} = require('mongodb');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
+const port = process.env.PORT || 3000;
 
 var app = express();
 
@@ -51,8 +52,29 @@ app.get('/todos/:id',(req,res)=>{
     }
 });
 
-app.listen(3000, () => {
-    console.log('started on port 3000');
+app.delete('/todos/:id',(req,res)=>{
+    var id = req.params.id;
+     if (ObjectID.isValid(id)) {
+         Todo.findByIdAndRemove(id).then((result) => {
+             if (result)
+                 res.send({ todo: result});
+             else
+                 res.status(404).send({
+                     error: 'not found'
+                 })
+         }, (error) => {
+             res.status(404).send(error)
+         })
+     } else {
+         res.status(404).send({
+             error: `${id} malformed`
+         });
+     }
+
+});
+
+app.listen(port, () => {
+    console.log(`started at port ${port}`);
 });
 
 module.exports = {

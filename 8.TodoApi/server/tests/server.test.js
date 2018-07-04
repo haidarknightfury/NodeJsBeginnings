@@ -8,7 +8,7 @@ const {ObjectId} = require('mongodb');
 
 
 
-const todos = [{_id:new ObjectId(),text:'first test todo'}, {_id:new ObjectId(),text:'second test todo'}];
+const todos = [{_id:new ObjectId(),text:'first test todo'}, {_id:new ObjectId(),text:'second test todo',completed:true,completedAt:13146846}];
 
 // move to test case after done is called
 beforeEach((done)=>{
@@ -139,4 +139,43 @@ describe('GET /todos:id',()=>{
                         .end(done);
                 });
             });
+
+
+        describe('PATCH /todos/:id',()=>{
+            it('should update an todo',(done)=>{
+                var hexId = todos[0]._id.toHexString();
+                var text = 'new text';
+                request(app)
+                .patch(`/todos/${hexId}`)
+                .send({
+                    completed:true,
+                    text
+                })
+                .expect(200)
+                .expect((res)=>{
+                    expect(res.body.todo.text).toBe(text);
+                    expect(res.body.todo.completed).toBe(true);
+                    expect(res.body.todo.completedAt).toBeGreaterThan(0);
+                })
+                .end(done);
+            });
+
+            it('should update an todo false', (done) => {
+                var hexId = todos[1]._id.toHexString();
+                request(app)
+                    .patch(`/todos/${hexId}`)
+                    .send({
+                        completed: false,
+                    })
+                    .expect(200)
+                    .expect((res) => {
+                        expect(res.body.todo.completed).toBe(false);
+                        expect(res.body.todo.completedAt).toBe(null);
+                    })
+                    .end(done);
+            });
+
+
+
+        });
 });

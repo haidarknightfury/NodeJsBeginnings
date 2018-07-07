@@ -4,20 +4,23 @@
   "description": "// start the server with the path for the data\r mongod.exe --dbpath /Users/Haidar/mongo-data",
   "main": "index.js",
   "scripts": {
-    "start":"node server/server.js",
+    "start": "node server/server.js",
     "test": "export NODE_ENV=test|| SET \"NODE_ENV=test\" && mocha server/**/*.test.js",
-    "test-watch":"nodemon --exec npm test"
+    "test-watch": "nodemon --exec npm test"
   },
   "engines": {
-    "node":"8.11.1"
+    "node": "8.11.1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "crypto-js": "^3.1.9-1",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "mongodb": "^2.2.5",
-    "mongoose": "^4.5.9"
+    "mongoose": "^4.5.9",
+    "validator": "^10.4.0"
   },
   "devDependencies": {
     "expect": "^23.1.0",

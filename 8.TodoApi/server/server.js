@@ -101,7 +101,20 @@ app.patch('/todos/:id',(req,res)=>{
         })
 });
 
+app.post('/users',(req,res)=>{
+    // pick only text and completed
+     var body = _.pick(req.body, ['email', 'password']);
+     var user = new User({email:body.email, password:body.password});
+    // var user = new User(body);
+     user.save().then((user)=>{
+        console.log(`${user} saved successful`);
+        res.send(user);
+     }).catch((err)=>{  
+         console.log(err);
+         return res.status(400).send(err);
+     })
 
+});
 
 app.listen(port, () => {
     console.log(`started at port ${port}`);
